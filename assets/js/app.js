@@ -49,7 +49,8 @@ import "phoenix_html"
             }).then(async res => {
                 const json = await res.json();
 
-                console.log('data', json.data)
+                // getting uri of generated timeline video
+                console.log('data', json.data.createTimeline)
             }).catch(err => {
                 console.log('error', JSON.stringify(err));
             })
