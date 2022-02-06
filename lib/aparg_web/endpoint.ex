@@ -24,7 +24,7 @@ defmodule ApargWeb.Endpoint do
     at: "/",
     from: :aparg,
     gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    only: ~w(css fonts uploads images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -45,7 +45,8 @@ defmodule ApargWeb.Endpoint do
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
     pass: ["*/*"],
-    json_decoder: Phoenix.json_library()
+    json_decoder: Phoenix.json_library(),
+    length: 100_000_000
 
   plug Plug.MethodOverride
   plug Plug.Head

@@ -10,19 +10,28 @@ defmodule ApargWeb.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json", "html"]
   end
 
   scope "/", ApargWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+    post "/", PageController, :create
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", ApargWeb do
-  #   pipe_through :api
-  # end
+  scope "/api" do
+    pipe_through :api
+
+    forward "/graphql", Absinthe.Plug,
+      schema: ApargWeb.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL,
+      schema: ApargWeb.Schema,
+      interface: :simple,
+      context: %{pubsub: ApargWeb.Endpoint}
+  end
 
   # Enables LiveDashboard only for development
   #
